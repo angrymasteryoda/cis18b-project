@@ -81,7 +81,7 @@ public class KeyHandler implements KeyListener {
 			this.keyTyped.keyPAD0();	// Number pad 0
 		}
 		if (keyCode==97) {
-			this.keyTyped.keyPAD1();		// Number pad 1
+			this.keyTyped.keyPAD1();	// Number pad 1
 		}
 		if (keyCode==98) {
 			this.keyTyped.keyPAD2();	// Number pad 2
