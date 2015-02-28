@@ -21,6 +21,19 @@ public class Screen extends JPanel implements Runnable {
 	private boolean fullScreen = false;			// Game set to fullscreen
 	private boolean debug = false;				// Game debugger > On shows info on screen > TODO print or log values for debugging
 	private boolean hand = false;				// Game mouse > Is the plwyer holding an object (tower) currently
+	private int windowW;							// Window width
+	private int windowH;							// Window height
+	
+	public void updateScreenSize(){
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		if (fullScreen==true){
+			windowW = screenSize.width;		// Window width
+			windowH = screenSize.height;	// Window height
+		} else {
+			windowW = screenSize.width*2/3;		// Window width
+			windowH = screenSize.height*2/3;	// Window height
+		}
+	}
 	
 	public Screen(GameWindow frame) {
 		this.frame = frame;
@@ -31,21 +44,35 @@ public class Screen extends JPanel implements Runnable {
 	public void paintComponent(Graphics g){
 		g.clearRect(0,0,this.frame.getWidth(),this.frame.getHeight());	// Clear last painted layer or we will suffer major lag
 		
-		// Main Menu - Keep 0 - 9 reserved for menus, levels start at 10
-		// NOTE:	I removed the else statments because that is redundant
-		//			Just make sure to ALWAYS set a vaild scene number
-		//			[UPDATE] I Feel we may need to add th else statments back in?
 		if (scene==0){
+			// Draw main menu
 			g.setColor(Color.DARK_GRAY);
-		}
-		if (scene==10){
+			g.fillRect(0,0,this.frame.getWidth(),this.frame.getHeight());
+		} else if (scene==1){
+			// Draw level layout
 			g.setColor(Color.GREEN);
-		}
-		// Error scene
-		if (scene<0){
+			g.fillRect(0,0,this.frame.getWidth(),this.frame.getHeight());
+			g.setColor(Color.GRAY);
+			// Dynamiclly size grid to be 50 x 25 on any monitor size and center the playing area in the scene
+			int revertBorder = 0;
+			if (fullScreen==false){
+				revertBorder = 30;
+			}
+			int gridW = (int) Math.floor((windowW-40)/55);
+			for (int x=0;x<50;x++){
+				for (int y=0;y<25;y++){
+					g.drawRect((windowW-(gridW*55))/2+(x*gridW),((windowH-revertBorder)-(gridW*25))/2+(y*gridW),gridW,gridW);
+				}
+			}
+			// TODO >	Our tower and score area will be to the right of the grid the above calculations allow
+			//			for there to be a 1 grid space between the playing area and our tower / score area
+			//			which is 4 grid squares wide. So for now just pretend there are 5 more grid squares 
+			//			that are invisible to the right of the grid
+		} else {
+			// Error screen, scene variable is an invalid value
 			g.setColor(Color.RED);
+			g.fillRect(0,0,this.frame.getWidth(),this.frame.getHeight());
 		}
-		g.fillRect(0,0,this.frame.getWidth(),this.frame.getHeight());
 		
 		if (debug==true){
 			// Display FPS for debugging
@@ -61,6 +88,7 @@ public class Screen extends JPanel implements Runnable {
 		
 		long lastFrame = System.currentTimeMillis();	// Tracker of our FPS > so we don't blow up the computer
 		int frames = 0;									// Start counting FPS
+		updateScreenSize();
 		running = true;									// Game is loaded now
 		scene = 0;										// Screen go to scene 0 (main menu)
 		
@@ -68,12 +96,11 @@ public class Screen extends JPanel implements Runnable {
 		while (running){
 			
 			repaint();
-			frames++;	// Update FPS every millisecond
+			frames++;	// Update FPS count every millisecond
 			
 			if (System.currentTimeMillis()-1000 >= lastFrame){
 				// TODO - If a player is playing and the clock passes midnight FPS will fail since system time will now start over at 0
 				// TODO - Add an if statement that will catch this and reset things
-				
 				fps = frames;
 				frames = 0;
 				lastFrame = System.currentTimeMillis();
@@ -111,19 +138,18 @@ public class Screen extends JPanel implements Runnable {
 				frame.setExtendedState(MAXIMIZED_BOTH); // Go fullscreen
 				frame.setUndecorated(true);				// Remove the window border and controls from view
 				frame.setVisible(true);					// Recreate the frame with new size
-				System.out.println("You are now fullscreen");
+				updateScreenSize();
+				System.out.println("You are now fullscreen: "+windowW+"W "+windowH+"H");
 			} else {
 				fullScreen = false;
-				Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-				int height = screenSize.height * 2 / 3;
-				int width = screenSize.width * 2 / 3;
 				frame.dispose();						// Remove the old frame
+				updateScreenSize();
 				frame.setExtendedState(NORMAL);			// Remove fullscreen
 				frame.setUndecorated(false);			// Return window border and controls to view
-				frame.setSize(width,height);			// Go 2/3 of the monitors size
+				frame.setSize(windowW,windowH);			// Go 2/3 of the monitors size
 				frame.setLocationRelativeTo(null);		// Center frame in monitor
 				frame.setVisible(true);					// Recreate the frame with new size
-				System.out.println("You are now back to normal: "+width+"W "+height+"H");
+				System.out.println("You are now back to normal: "+windowW+"W "+windowH+"H");
 			}
 		}
 		
@@ -144,7 +170,12 @@ public class Screen extends JPanel implements Runnable {
 		}
 
 		public void keySPACE() {
-			
+			// TEMP > Move to buttons later
+			if (scene==0){
+				scene = 1;
+			} else {
+				scene = 0;
+			}
 		}
 
 		public void keyD() {

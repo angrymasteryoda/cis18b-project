@@ -13,10 +13,10 @@ public class GameWindow extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		// DONATED CODE BY Alvin Alexander (http://alvinalexander.com/java/jframe-size-example-screen)
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int height = screenSize.height * 2 / 3;
-		int width = screenSize.width * 2 / 3;
+		int windowH = screenSize.height * 2 / 3;
+		int windowW = screenSize.width * 2 / 3;
 		// END DONATED CODE
-		this.setSize(width,height);
+		this.setSize(windowW,windowH);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setVisible(true);
