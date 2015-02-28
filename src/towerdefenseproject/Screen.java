@@ -73,6 +73,7 @@ public class Screen extends JPanel implements Runnable {
 			if (System.currentTimeMillis()-1000 >= lastFrame){
 				// TODO - If a player is playing and the clock passes midnight FPS will fail since system time will now start over at 0
 				// TODO - Add an if statement that will catch this and reset things
+				
 				fps = frames;
 				frames = 0;
 				lastFrame = System.currentTimeMillis();
