@@ -12,10 +12,10 @@ import java.awt.Toolkit;
 // Runnable - Allows us to start and stop executing the run class
 public class Screen extends JPanel implements Runnable {
 
-	public Thread thread = new Thread(this);	// Main thread of the game > once started this is controled by running
-	GameWindow frame;							// Load GameWindow > we need its generated size
-	private int fps = 0;						// Frames Per Second (FPS)
-	private int scene;							// Game scenes > 0 is main menu, levels will have their own numbers
+	public Thread thread = new Thread(this);		// Main thread of the game > once started this is controled by running
+	GameWindow frame;					// Load GameWindow > we need its generated size
+	private int fps = 0;					// Frames Per Second (FPS)
+	private int scene;					// Game scenes > 0 is main menu, levels will have their own numbers
 	private boolean running = false;			// Game loaded > once loaded if false is deteceted again shutdown game
 	private boolean paused = false;				// Game pasued
 	private boolean fullScreen = false;			// Game set to fullscreen
@@ -33,8 +33,8 @@ public class Screen extends JPanel implements Runnable {
 		
 		// Main Menu - Keep 0 - 9 reserved for menus, levels start at 10
 		// NOTE:	I removed the else statments because that is redundant
-		//			Just make sure to ALWAYS set a vaild scene number
-		//			[UPDATE] I Feel we may need to add th else statments back in?
+		//		Just make sure to ALWAYS set a vaild scene number
+		//		[UPDATE] I Feel we may need to add th else statments back in?
 		if (scene==0){
 			g.setColor(Color.DARK_GRAY);
 		}
@@ -60,9 +60,9 @@ public class Screen extends JPanel implements Runnable {
 	public void run() {
 		
 		long lastFrame = System.currentTimeMillis();	// Tracker of our FPS > so we don't blow up the computer
-		int frames = 0;									// Start counting FPS
-		running = true;									// Game is loaded now
-		scene = 0;										// Screen go to scene 0 (main menu)
+		int frames = 0;					// Start counting FPS
+		running = true;					// Game is loaded now
+		scene = 0;					// Screen go to scene 0 (main menu)
 		
 		// As long as the user is playing, keep refreshing the game (FPS)
 		while (running){
@@ -80,7 +80,7 @@ public class Screen extends JPanel implements Runnable {
 			// Force the refresh to slow down
 			try {
 				Thread.sleep(10);	// I CHANGED THIS FROM 2 TO 10 SO FPS IS IN A RANGE UNDER 100 LIKE ACTUAL GAMES
-									// THIS CHANGE WILL EFFECT THINGS LIKE ENEMY SPEED AND MOVEMENT
+							// THIS CHANGE WILL EFFECT THINGS LIKE ENEMY SPEED AND MOVEMENT
 			} catch (InterruptedException e) {
 				// TODO - This is just an error that is thrown if the sleep failed for some reason. Do we want to do anything with it?
 				e.printStackTrace();
@@ -106,8 +106,8 @@ public class Screen extends JPanel implements Runnable {
 		public void keyF11() {
 			if (fullScreen==false){
 				fullScreen = true;
-				frame.dispose();						// Remove the old frame
-				frame.setExtendedState(MAXIMIZED_BOTH); // Go fullscreen
+				frame.dispose();					// Remove the old frame
+				frame.setExtendedState(MAXIMIZED_BOTH); 		// Go fullscreen
 				frame.setUndecorated(true);				// Remove the window border and controls from view
 				frame.setVisible(true);					// Recreate the frame with new size
 				System.out.println("You are now fullscreen");
@@ -116,12 +116,12 @@ public class Screen extends JPanel implements Runnable {
 				Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 				int height = screenSize.height * 2 / 3;
 				int width = screenSize.width * 2 / 3;
-				frame.dispose();						// Remove the old frame
+				frame.dispose();				// Remove the old frame
 				frame.setExtendedState(NORMAL);			// Remove fullscreen
 				frame.setUndecorated(false);			// Return window border and controls to view
 				frame.setSize(width,height);			// Go 2/3 of the monitors size
 				frame.setLocationRelativeTo(null);		// Center frame in monitor
-				frame.setVisible(true);					// Recreate the frame with new size
+				frame.setVisible(true);				// Recreate the frame with new size
 				System.out.println("You are now back to normal: "+width+"W "+height+"H");
 			}
 		}
