@@ -23,8 +23,10 @@ public class Screen extends JPanel implements Runnable {
 	private boolean fullScreen = false;            // Game set to fullscreen
 	private boolean debug = false;                // Game debugger > On shows info on screen > TODO print or log values for debugging
 	private boolean hand = false;                // Game mouse > Is the plwyer holding an object (tower) currently
-	private int windowW;                            // Window width
-	private int windowH;                            // Window height
+	public static int windowW;                            // Window width
+	public static int windowH;                            // Window height
+	public static int gridW;	//	Size of individual grid square
+	public static int revertBorder = 31;	// Fix horizontal location of playing area
 
 	public void updateScreenSize() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -35,6 +37,8 @@ public class Screen extends JPanel implements Runnable {
 			windowW = screenSize.width * 2 / 3;        // Window width
 			windowH = screenSize.height * 2 / 3;    // Window height
 		}
+		gridW = (int) Math.floor( ( windowW - 40 ) / 55 );  // Playing grid square size
+		PathFinding.NodeList(); // Update AI path locations
 	}
 
 	public Screen( GameWindow frame ) {
@@ -52,19 +56,18 @@ public class Screen extends JPanel implements Runnable {
 			g.fillRect( 0, 0, this.frame.getWidth(), this.frame.getHeight() );
 		} else if ( scene == 1 ) {
 			// Draw level layout
-			g.setColor( Color.GREEN );
+			g.setColor( Color.BLACK );
 			g.fillRect( 0, 0, this.frame.getWidth(), this.frame.getHeight() );
 			g.setColor( Color.GRAY );
 			// Dynamiclly size grid to be 50 x 25 on any monitor size and center the playing area in the scene
-			int revertBorder = 0;
-			if ( fullScreen == false ) {
-				revertBorder = 30;
-			}
-			int gridW = (int) Math.floor( ( windowW - 40 ) / 55 );
 			for ( int x = 0; x < 50; x++ ) {
 				for ( int y = 0; y < 25; y++ ) {
 					g.drawRect( ( windowW - ( gridW * 55 ) ) / 2 + ( x * gridW ), ( ( windowH - revertBorder ) - ( gridW * 25 ) ) / 2 + ( y * gridW ), gridW, gridW );
 				}
+			}
+			for (int x = 0; x<1250;x++){
+			//System.out.println("("+PathFinding.nodeListX[x]+","+PathFinding.nodeListY[x]+")");
+				g.drawOval(PathFinding.nodeListX[x],PathFinding.nodeListY[x],1,1);
 			}
 			// TODO >	Our tower and score area will be to the right of the grid the above calculations allow
 			//			for there to be a 1 grid space between the playing area and our tower / score area
@@ -99,7 +102,10 @@ public class Screen extends JPanel implements Runnable {
 
 			repaint();
 			frames++;    // Update FPS count every millisecond
-
+			if ( fullScreen == false ) {
+				revertBorder = 30;
+			}
+			
 			if ( System.currentTimeMillis() - 1000 >= lastFrame ) {
 				// TODO - If a player is playing and the clock passes midnight FPS will fail since system time will now start over at 0
 				// TODO - Add an if statement that will catch this and reset things
