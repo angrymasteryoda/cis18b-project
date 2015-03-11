@@ -5,15 +5,15 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-	private Screen screen;
-	private Screen.KeyTyped keyTyped;
-
-	public KeyHandler( Screen screen ) {
-		this.screen = screen;
-		this.keyTyped = this.screen.new KeyTyped();
+	private GameWindow frame;
+	private GameWindow.KeyTyped keyTyped;
+//
+	public KeyHandler( GameWindow frame ) {
+		this.frame = frame;
+		this.keyTyped = this.frame.new KeyTyped();
 	}
 
-	public void keyPressed( KeyEvent k ) {
+	public void keyPressed(KeyEvent k) {
 		int keyCode = k.getKeyCode();
 		System.out.println( "Your pressing keyboard key: " + keyCode );
 		// Assign keys to their classes
