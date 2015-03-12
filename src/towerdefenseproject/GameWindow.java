@@ -1,12 +1,10 @@
  package towerdefenseproject;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import static towerdefenseproject.Screens.updateLayoutPanels;
 
 public class GameWindow extends JFrame {
@@ -205,6 +203,22 @@ public class GameWindow extends JFrame {
 	}
 	
     public static void main(String[] args) {
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch ( Exception ex) {
+//            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+////                new MainWindow().setVisible(true);
+//                new LoginWindow().setVisible(true);
+//            }
+//        });
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
 		Screens.loadImages();

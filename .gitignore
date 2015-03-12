@@ -3,5 +3,5 @@
 *.ipr
 *.iws
 /out/
-/nbproject/private/*
+/nbproject/private/
 /build/
