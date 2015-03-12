@@ -1,0 +1,7 @@
+/dist/
+*.iml
+*.ipr
+*.iws
+/out/
+/nbproject/private/*
+/build/
