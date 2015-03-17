@@ -4,17 +4,68 @@
  */
 package towerdefenseproject;
 
+import java.awt.BorderLayout;
+
 /**
  *
  * @author Michael
  */
 public class MainFrame extends javax.swing.JFrame {
+    
+    private static int pane = 0;
+    private static GamePanel gamePanel;
 
+    private static MainFrame instance = null;
+   
+    /**
+     * get singleton instance of the mainframe
+     * @return 
+     */
+    public static MainFrame getInstance() {
+       if(instance == null) {
+          instance = new MainFrame();
+       }
+       return instance;
+    }
     /**
      * Creates new form MainFrame
      */
-    public MainFrame() {
+    protected MainFrame() {
         initComponents();
+        addKeyListener( new KeyHandler() );
+        
+        gamePanel = new GamePanel();
+        
+    }
+    
+    private void updatePanes(){
+        if ( pane == 0 ) {
+            remove( gamePanel );
+            //TODO build main menu
+        }
+        else if ( pane == 1 ){
+            setLayout(new BorderLayout());
+            add( gamePanel, BorderLayout.CENTER);
+        }
+        pack();
+        revalidate();
+    }
+    
+    public static boolean runAction( String action ){
+        if ( action.equals( "paneChange" ) ){
+            if ( pane == 0 ){
+				pane = 1;
+			} else {
+				pane = 0;
+			}
+            MainFrame.getInstance().updatePanes();
+            return true;
+        }
+        else if( action.equals( "debug" ) ){
+            gamePanel.getBankPane1().setMoneyLabel( "1234.34" );
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -27,8 +78,8 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Tower Defence");
         setMinimumSize(new java.awt.Dimension(1007, 549));
-        setPreferredSize(new java.awt.Dimension(1007, 549));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

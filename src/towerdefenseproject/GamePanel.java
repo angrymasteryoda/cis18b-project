@@ -63,10 +63,10 @@ public class GamePanel extends javax.swing.JPanel {
         menuPaneLayout.setVerticalGroup(
             menuPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuPaneLayout.createSequentialGroup()
-                .addGroup(menuPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(towerInfoPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bankPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(wavePane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(menuPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(wavePane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bankPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(towerInfoPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -92,4 +92,16 @@ public class GamePanel extends javax.swing.JPanel {
     private towerdefenseproject.TowerInfoPane towerInfoPane1;
     private towerdefenseproject.WavePane wavePane1;
     // End of variables declaration//GEN-END:variables
+
+    public BankPane getBankPane1() {
+        return bankPane1;
+    }
+
+    public TowerInfoPane getTowerInfoPane1() {
+        return towerInfoPane1;
+    }
+
+    public WavePane getWavePane1() {
+        return wavePane1;
+    }
 }

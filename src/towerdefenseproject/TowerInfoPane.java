@@ -4,6 +4,8 @@
  */
 package towerdefenseproject;
 
+import javax.swing.JLabel;
+
 /**
  *
  * @author Michael
@@ -30,14 +32,14 @@ public class TowerInfoPane extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        typeLabel = new javax.swing.JLabel();
+        damageLabel = new javax.swing.JLabel();
+        reloadLabel = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        levelLabel = new javax.swing.JLabel();
+        upgradeLabel = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -49,11 +51,11 @@ public class TowerInfoPane extends javax.swing.JPanel {
 
         jLabel4.setText("Reload");
 
-        jLabel5.setText("Ground");
+        typeLabel.setText("Ground");
 
-        jLabel6.setText("12345");
+        damageLabel.setText("12345");
 
-        jLabel7.setText("2s");
+        reloadLabel.setText("2s");
 
         jLabel8.setText("Level");
 
@@ -61,9 +63,9 @@ public class TowerInfoPane extends javax.swing.JPanel {
 
         jLabel10.setText("idk");
 
-        jLabel11.setText("1");
+        levelLabel.setText("1");
 
-        jLabel12.setText("2500");
+        upgradeLabel.setText("2500");
 
         jLabel13.setText("idk");
 
@@ -81,9 +83,9 @@ public class TowerInfoPane extends javax.swing.JPanel {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
+                            .addComponent(typeLabel)
+                            .addComponent(damageLabel)
+                            .addComponent(reloadLabel))
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
@@ -92,8 +94,8 @@ public class TowerInfoPane extends javax.swing.JPanel {
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel11))
+                            .addComponent(upgradeLabel)
+                            .addComponent(levelLabel))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -106,37 +108,77 @@ public class TowerInfoPane extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel5)
+                    .addComponent(typeLabel)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel11))
+                    .addComponent(levelLabel))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel6)
+                    .addComponent(damageLabel)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel12))
+                    .addComponent(upgradeLabel))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                    .addComponent(reloadLabel)
                     .addComponent(jLabel4)
                     .addComponent(jLabel10)
                     .addComponent(jLabel13))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    public String getDamageLabel() {
+        return damageLabel.getText();
+    }
+
+    public void setDamageLabel(String damageLabel) {
+        this.damageLabel.setText( damageLabel );
+    }
+
+    public String getLevelLabel() {
+        return levelLabel.getText();
+    }
+
+    public void setLevelLabel(String levelLabel) {
+        this.levelLabel.setText( levelLabel );
+    }
+
+    public String getReloadLabel() {
+        return reloadLabel.getText();
+    }
+
+    public void setReloadLabel(String reloadLabel) {
+        this.reloadLabel.setText( reloadLabel );
+    }
+
+    public String getTypeLabel() {
+        return typeLabel.getText();
+    }
+
+    public void setTypeLabel(String typeLabel) {
+        this.typeLabel.setText( typeLabel );
+    }
+
+    public String getUpgradeLabel() {
+        return upgradeLabel.getText();
+    }
+
+    public void setUpgradeLabel(String upgradeLabel) {
+        this.upgradeLabel.setText( upgradeLabel );
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel damageLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel levelLabel;
+    private javax.swing.JLabel reloadLabel;
+    private javax.swing.JLabel typeLabel;
+    private javax.swing.JLabel upgradeLabel;
     // End of variables declaration//GEN-END:variables
 }

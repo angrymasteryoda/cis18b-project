@@ -63,20 +63,21 @@ public class GameWindow extends JFrame {
 
 		public void keyESC() {
 			if (fullScreen==true){
-				keyF11();
+                            keyF11();
 			} else {
-				// TODO - This instantly closes. Add warning pop up first. Maybe save game option?
-				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                            // TODO - This instantly closes. Add warning pop up first. Maybe save game option?
+                            // should bring you to a pause menu --michael
+                            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 			}
 		}
 
 		public void keyF11() {
 			if (fullScreen==false){
-				fullScreen = true;
-				updateScreenSize();
+                            fullScreen = true;
+                            updateScreenSize();
 			} else {
-				fullScreen = false;
-				updateScreenSize();
+                            fullScreen = false;
+                            updateScreenSize();
 			}
 		}
 
