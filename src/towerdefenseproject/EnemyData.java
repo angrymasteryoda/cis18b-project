@@ -110,7 +110,7 @@ public class EnemyData {
         return unitGold;
     }
     
-    public int getUnitType(){// 1-ground // 2-air
+    public int getUnitType(){// 0-ground 1-air
         return unitType;
     }
     
