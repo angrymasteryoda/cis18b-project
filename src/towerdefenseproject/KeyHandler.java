@@ -1,118 +1,81 @@
 package towerdefenseproject;
 
+import com.michael.api.IO.IO;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-	private Screen screen;
-	private Screen.KeyTyped keyTyped;
+	private final Object parent;
 
-	public KeyHandler( Screen screen ) {
-		this.screen = screen;
-		this.keyTyped = this.screen.new KeyTyped();
+    public KeyHandler( Object parent ) {
+		this.parent = parent;
+	}
+    
+    public KeyHandler() {
+		this( null );
 	}
 
-	public void keyPressed( KeyEvent k ) {
+    @Override
+	public void keyPressed(KeyEvent k) {
 		int keyCode = k.getKeyCode();
-		System.out.println( "Your pressing keyboard key: " + keyCode );
-		// Assign keys to their classes
-		if ( keyCode == 27 ) {
-			this.keyTyped.keyESC();        // Esc
-		}
+		IO.println( "Your pressing keyboard key: " + keyCode );
+        boolean actionRan = false;
+        switch( keyCode ){
+            case 27: // Esc
+                break;
+            case 32: // Spacebar
+                actionRan = MainFrame.runAction( "paneChange" );
+                break;
+            case 122: // F11 (Fullscreen) //TODO fix this maybe
+            case 127: // Delete
+            case 8: // Backspace
+            case 10: // Enter
+            case 16: // Shift
+            case 77: // M
+            case 80: // P
+            case 48: // 0
+            case 49: // 1
+            case 50: // 2
+            case 51: // 3
+            case 52: // 4
+            case 53: // 5
+            case 54: // 6
+            case 55: // 7
+            case 56: // 8
+            case 57: // 9
+            case 96: // Number pad 0
+            case 97: // Number pad 1
+            case 98: // Number pad 2
+            case 99: // Number pad 3
+            case 100: // Number pad 4
+            case 101: // Number pad 5
+            case 102: // Number pad 6
+            case 103: // Number pad 7
+            case 104: // Number pad 8
+            case 105: // Number pad 9
+                break;
+            case 68: // D
+                actionRan = MainFrame.runAction( "debug" );
+                break;
+        }
+        if ( !actionRan ) {
+            IO.printlnErr( "Unhandled key event" );
+        }
+        /*
+		// Assign keys to their classes	
 		if ( keyCode == 122 ) {
 			this.keyTyped.keyF11();        // F11 (Fullscreen)
 		}
-		if ( keyCode == 127 ) {
-			this.keyTyped.keyDEL();        // Delete
-		}
-		if ( keyCode == 8 ) {
-			this.keyTyped.keyBACK();    // Backspace
-		}
-		if ( keyCode == 10 ) {
-			this.keyTyped.keyENTER();    // Enter
-		}
-		if ( keyCode == 16 ) {
-			this.keyTyped.keySHIFT();    // Shift
-		}
-		if ( keyCode == 32 ) {
-			this.keyTyped.keySPACE();    // Spacebar
-		}
-		if ( keyCode == 68 ) {
-			this.keyTyped.keyD();        // D
-		}
-		if ( keyCode == 77 ) {
-			this.keyTyped.keyM();        // M
-		}
-		if ( keyCode == 80 ) {
-			this.keyTyped.keyP();        // P
-		}
-		if ( keyCode == 48 ) {
-			this.keyTyped.key0();        // 0
-		}
-		if ( keyCode == 49 ) {
-			this.keyTyped.key1();        // 1
-		}
-		if ( keyCode == 50 ) {
-			this.keyTyped.key2();        // 2
-		}
-		if ( keyCode == 51 ) {
-			this.keyTyped.key3();        // 3
-		}
-		if ( keyCode == 52 ) {
-			this.keyTyped.key4();        // 4
-		}
-		if ( keyCode == 53 ) {
-			this.keyTyped.key5();        // 5
-		}
-		if ( keyCode == 54 ) {
-			this.keyTyped.key6();        // 6
-		}
-		if ( keyCode == 55 ) {
-			this.keyTyped.key7();        // 7
-		}
-		if ( keyCode == 56 ) {
-			this.keyTyped.key8();        // 8
-		}
-		if ( keyCode == 57 ) {
-			this.keyTyped.key9();        // 9
-		}
-		if ( keyCode == 96 ) {
-			this.keyTyped.keyPAD0();    // Number pad 0
-		}
-		if ( keyCode == 97 ) {
-			this.keyTyped.keyPAD1();        // Number pad 1
-		}
-		if ( keyCode == 98 ) {
-			this.keyTyped.keyPAD2();    // Number pad 2
-		}
-		if ( keyCode == 99 ) {
-			this.keyTyped.keyPAD3();    // Number pad 3
-		}
-		if ( keyCode == 100 ) {
-			this.keyTyped.keyPAD4();    // Number pad 4
-		}
-		if ( keyCode == 101 ) {
-			this.keyTyped.keyPAD5();    // Number pad 5
-		}
-		if ( keyCode == 102 ) {
-			this.keyTyped.keyPAD6();    // Number pad 6
-		}
-		if ( keyCode == 103 ) {
-			this.keyTyped.keyPAD7();    // Number pad 7
-		}
-		if ( keyCode == 104 ) {
-			this.keyTyped.keyPAD8();    // Number pad 8
-		}
-		if ( keyCode == 105 ) {
-			this.keyTyped.keyPAD9();    // Number pad 9
-		}
+        */
 	}
 
+    @Override
 	public void keyReleased( KeyEvent k ) {
 		// Unused
 	}
 
+    @Override
 	public void keyTyped( KeyEvent k ) {
 		// Unused
 	}
