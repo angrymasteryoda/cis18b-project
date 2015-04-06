@@ -33,6 +33,7 @@ public class MainFrame extends javax.swing.JFrame {
     protected MainFrame() {
         initComponents();
         addKeyListener( new KeyHandler() );
+	    setLocationRelativeTo( null );
         
         gamePanel = new GamePanel();
         
