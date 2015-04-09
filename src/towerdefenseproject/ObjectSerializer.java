@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption.*;
+import static java.nio.file.StandardOpenOption.*;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 /**
