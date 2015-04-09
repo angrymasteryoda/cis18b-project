@@ -194,7 +194,13 @@ public class Enemy implements Serializable {
 			FileOutputStream fileOut = new FileOutputStream("log/test.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			// Do work here
-			out.writeObject(enemyArray);
+			for (int x=0;x<enemyArray.length;x++){
+				if (enemyArray[x]!=null){
+					Enemy tmp = enemyArray[x];
+					System.out.println(tmp);
+					out.writeObject(tmp);
+				}
+			}
 			out.close();
 			fileOut.close();
 		} catch (FileNotFoundException ex) {
