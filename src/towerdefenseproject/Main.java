@@ -41,10 +41,11 @@ public class Main {
 
 	public static void main( String[] args ) throws Exception {
 		JWindow window = new JWindow();
+		
 		if( !Arrays.asList( args ).contains( "nosplash" ) ) {
 			Image splash = null;
 			Image splashResize = null;
-
+				
 			//if we fail to find image just boot app
 			try {
 				splash = ImageIO.read( new File( "res/tdc-logo-smaller.jpg" ) );
@@ -66,6 +67,8 @@ public class Main {
 		invokeLater( new Runnable() {
 			public void run() {
 				new LoginWindow().setVisible( true );
+				// TMP
+				EnemyController.initializeEnemies();
 			}
 		} );
 		window.dispose();

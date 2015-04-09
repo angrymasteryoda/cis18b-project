@@ -21,7 +21,7 @@ public class EnemyController implements Serializable {
 	 * maxEnemies is our hard coded value for maximum amount of enemies allowed to exist at one time,
 	 * enemyCounter allows us a quicker way to get a head count instead of looping through the list or array.
 	 */
-	public static final int maxEnemies = 500;	// Hardcoded max amount of enemies allowed in a game
+	public static final int maxEnemies = 300;	// Hardcoded max amount of enemies allowed in a game
 	private static EnemyIds enemyLLHead;
 	private static EnemyIds enemyLLTail;
 	private static int enemyCounter = maxEnemies;
@@ -135,12 +135,11 @@ public class EnemyController implements Serializable {
 			}
 			initializeEnemies = true;
 			//
-			int id = enemyCheckout();
-			new Enemy(id,1,2,3,4,5,6,7);
-			id = enemyCheckout();
-			new Enemy(id,1,2,3,4,5,6,7);
-			id = enemyCheckout();
-			new Enemy(id,1,2,3,4,5,6,7);
+			int id;
+			for (int x=1;x<maxEnemies;x++){
+				id = enemyCheckout();
+				new Enemy(id,x,x,x,x,x,x,x);
+			}
 		}
 	}
 }

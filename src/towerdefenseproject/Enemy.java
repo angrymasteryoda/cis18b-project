@@ -21,7 +21,7 @@ public class Enemy implements Serializable {
 	 * This array has a hard coded limit that is supplied from EnemyController.maxEnemies
 	 * EnemyCntroller.enemyCheckout() insures we do not pass that limit or crash the game with to many enemies.
 	 */
-	private Enemy[] enemyArray = new Enemy[EnemyController.maxEnemies];
+	public Enemy[] enemyArray = new Enemy[EnemyController.maxEnemies];
 	
 	// LOOK UP ENUM's for some of these
 	int id;
@@ -190,23 +190,39 @@ public class Enemy implements Serializable {
 	}
 	
 	public void serialize(){
-		try {
-			FileOutputStream fileOut = new FileOutputStream("log/test.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			// Do work here
-			for (int x=0;x<enemyArray.length;x++){
+		if (Serialization.checkFile("test")==false){
+			Serialization.createFile("test");
+		}
+		ObjectOutputStream connection = Serialization.openFile("test");
+		for (int x=0;x<enemyArray.length;x++){
 				if (enemyArray[x]!=null){
-					Enemy tmp = enemyArray[x];
-					System.out.println(tmp);
-					out.writeObject(tmp);
+					Serialization.addLine(connection,enemyArray[x]);
 				}
 			}
-			out.close();
-			fileOut.close();
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(EnemyController.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IOException ex) {
-			Logger.getLogger(EnemyController.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		//Serialization.addLine(connection,enemyArray);
+		Serialization.closeFile(connection);
+		enemyArray = null;
+		Serialization.readLine("test");
+		//System.out.println(enemyArray[0].id);
+//		try {
+//			FileOutputStream fileOut = new FileOutputStream("log/test.ser");
+//			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//			out.writeObject(enemyArray);
+//			out.writeUTF(t);
+//			// Do work here
+//			for (int x=0;x<enemyArray.length;x++){
+//				if (enemyArray[x]!=null){
+//					Enemy tmp = enemyArray[x];
+//					System.out.println(tmp+" >>> "+enemyArray[x]);
+//					out.writeObject(tmp);
+//				}
+//			}
+//			out.close();
+//			fileOut.close();
+//		} catch (FileNotFoundException ex) {
+//			Logger.getLogger(EnemyController.class.getName()).log(Level.SEVERE, null, ex);
+//		} catch (IOException ex) {
+//			Logger.getLogger(EnemyController.class.getName()).log(Level.SEVERE, null, ex);
+//		}
 	}
 }
