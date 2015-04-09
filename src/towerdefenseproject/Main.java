@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,26 +41,25 @@ public class Main {
 
 	public static void main( String[] args ) throws Exception {
 		JWindow window = new JWindow();
-		Image splash = null;
-		Image splashResize = null;
+		if( !Arrays.asList( args ).contains( "nosplash" ) ) {
+			Image splash = null;
+			Image splashResize = null;
 
-		//if we fail to find image just boot app
-		try {
-			splash = ImageIO.read( new File( "res/tdc-logo-smaller.jpg" ) );
-			splashResize = splash.getScaledInstance( width, height, java.awt.Image.SCALE_SMOOTH );
-
-			window.getContentPane().add(
-				new JLabel( "", new ImageIcon( splashResize ), SwingConstants.CENTER )
-			);
-			centreWindow( window, width, height );
-			window.setVisible( true );
+			//if we fail to find image just boot app
 			try {
+				splash = ImageIO.read( new File( "res/tdc-logo-smaller.jpg" ) );
+				splashResize = splash.getScaledInstance( width, height, java.awt.Image.SCALE_SMOOTH );
+
+				window.getContentPane().add(
+					new JLabel( "", new ImageIcon( splashResize ), SwingConstants.CENTER )
+				);
+				centreWindow( window, width, height );
+				window.setVisible( true );
+
 				Thread.sleep( time );
-			} catch ( InterruptedException e ) {
-				e.printStackTrace();
+			} catch ( Exception ex ) {
+				Logger.getLogger( Main.class.getName() ).log( Level.SEVERE, null, ex );
 			}
-		} catch ( IOException ex ) {
-			Logger.getLogger( Screens.class.getName() ).log( Level.SEVERE, null, ex );
 		}
 
 
