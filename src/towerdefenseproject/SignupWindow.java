@@ -49,8 +49,18 @@ public class SignupWindow extends javax.swing.JFrame {
         passLabel.setText("Password");
 
         createButton.setText("Sign Up");
+        createButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createButtonActionPerformed(evt);
+            }
+        });
 
         loginButton.setText("Have An Account");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,6 +111,17 @@ public class SignupWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        this.dispose();
+        new LoginWindow().setVisible( true );
+    }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+        this.dispose();
+        new LoginWindow().setVisible( true );
+        //TODO pass info from this window into the login so save users time
+    }//GEN-LAST:event_createButtonActionPerformed
 
     /**
      * @param args the command line arguments

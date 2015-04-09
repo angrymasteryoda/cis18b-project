@@ -65,8 +65,7 @@ public class Main {
 
 		invokeLater( new Runnable() {
 			public void run() {
-				MainFrame.getInstance().setVisible( true );
-				//new MainFrame().setVisible(true);
+				new LoginWindow().setVisible( true );
 			}
 		} );
 		window.dispose();

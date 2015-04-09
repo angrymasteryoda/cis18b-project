@@ -44,6 +44,11 @@ public class LoginWindow extends javax.swing.JFrame {
 
         loginButton.setText("Login");
         loginButton.setActionCommand("login");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
         signupButton.setText("Sign Up");
         signupButton.addActionListener(new java.awt.event.ActionListener() {
@@ -101,6 +106,11 @@ public class LoginWindow extends javax.swing.JFrame {
         this.dispose();
         new SignupWindow().setVisible( true );
     }//GEN-LAST:event_signupButtonActionPerformed
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        this.dispose();
+        MainFrame.getInstance().setVisible( true );
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton loginButton;
