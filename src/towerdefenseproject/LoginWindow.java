@@ -57,7 +57,7 @@ public class LoginWindow extends javax.swing.JFrame {
             }
         });
 
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/templogo.gif"))); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/login-logo.jpg"))); // NOI18N
 
         passField.setToolTipText("");
 

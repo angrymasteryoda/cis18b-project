@@ -5,6 +5,8 @@
  */
 package towerdefenseproject;
 
+import com.michael.api.IO.IO;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -68,7 +70,7 @@ public class Main {
 			public void run() {
 				new LoginWindow().setVisible( true );
 				// TMP
-				EnemyController.initializeEnemies();
+				//EnemyController.initializeEnemies();
 			}
 		} );
 		window.dispose();
