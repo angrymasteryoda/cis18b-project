@@ -179,9 +179,10 @@ public class SignupWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+
+		//todo how is this working shouldn't since the comps are now out cleared from mem?
         this.dispose();
-        new LoginWindow().setVisible( true );
-        //TODO pass info from this window into the login so save users time
+        new LoginWindow( usernameField.getText(), passField.getPassword().toString() ).setVisible( true );
     }//GEN-LAST:event_createButtonActionPerformed
 
 

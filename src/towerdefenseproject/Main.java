@@ -6,6 +6,7 @@
 package towerdefenseproject;
 
 import com.michael.api.IO.IO;
+import com.michael.api.db.MySqlDatabase;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +28,8 @@ public class Main {
 	private static int width = 800; //width of splash
 	private static int height = 436; //height of splash
 	private static long time = 3000L; //time for the splash screen
+	protected static MySqlDatabase db;
+	protected static Connection connection;
 
 
 	/**
@@ -65,15 +69,25 @@ public class Main {
 			}
 		}
 
-
+		db = new MySqlDatabase( "res/database.props", "local");
+		connection = db.getConnection();
 		invokeLater( new Runnable() {
 			public void run() {
+				IO.println( db.checkTableExists( "table" ) );
 				new LoginWindow().setVisible( true );
 				// TMP
 				//EnemyController.initializeEnemies();
 			}
 		} );
 		window.dispose();
+		connection.close();
 	}
 
+	public static MySqlDatabase getDb() {
+		return db;
+	}
+
+	public static Connection getConnection() {
+		return connection;
+	}
 }

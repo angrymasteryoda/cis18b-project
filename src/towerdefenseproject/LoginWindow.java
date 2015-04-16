@@ -11,11 +11,21 @@ package towerdefenseproject;
 public class LoginWindow extends javax.swing.JFrame {
 
     /**
-     * Creates new form LoginWindow
+     * Creates new form LoginWindow with login data
      */
-    public LoginWindow() {
+    public LoginWindow( String user, String pass ) {
+		//todo should we pass the password?
         initComponents();
+		userField.setText( user );
+		passField.setText( pass );
     }
+
+	/**
+	 * Creates new form LoginWindow
+	 */
+	public LoginWindow() {
+		this( "", "" );
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
