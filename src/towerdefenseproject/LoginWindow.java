@@ -4,6 +4,14 @@
  */
 package towerdefenseproject;
 
+import com.michael.api.Encoder;
+
+import javax.swing.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author Michael
@@ -16,7 +24,7 @@ public class LoginWindow extends javax.swing.JFrame {
     public LoginWindow( String user, String pass ) {
 		//todo should we pass the password?
         initComponents();
-		userField.setText( user );
+		emailField.setText( user );
 		passField.setText( pass );
     }
 
@@ -36,8 +44,8 @@ public class LoginWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        userField = new javax.swing.JTextField();
-        userLabel = new javax.swing.JLabel();
+        emailField = new javax.swing.JTextField();
+        emailLabel = new javax.swing.JLabel();
         passLabel = new javax.swing.JLabel();
         loginButton = new javax.swing.JButton();
         signupButton = new javax.swing.JButton();
@@ -47,7 +55,7 @@ public class LoginWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
 
-        userLabel.setText("Username");
+        emailLabel.setText("Email");
 
         passLabel.setText("Password");
         passLabel.setToolTipText("");
@@ -84,8 +92,8 @@ public class LoginWindow extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(loginButton))
                     .addComponent(passLabel)
-                    .addComponent(userLabel)
-                    .addComponent(userField)
+                    .addComponent(emailLabel)
+                    .addComponent(emailField)
                     .addComponent(passField))
                 .addContainerGap(96, Short.MAX_VALUE))
         );
@@ -95,9 +103,9 @@ public class LoginWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(userLabel)
+                .addComponent(emailLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(userField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(55, 55, 55)
                 .addComponent(passLabel)
                 .addGap(18, 18, 18)
@@ -118,17 +126,35 @@ public class LoginWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_signupButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+		try{
+			Connection connection = Main.getConnection();
+			Statement state = connection.createStatement();
+			ResultSet res = state.executeQuery( "SELECT id FROM users WHERE email=\""+ emailField.getText() + "\" AND password=\"" + Encoder.getMd5( passField.getText() ) + "\";" );
+
+			if ( !res.next() ) {
+				JOptionPane.showMessageDialog( this, "Email and or password was incorrect" );
+				return;
+			}
+
+			res.close();
+			state.close();
+			connection.close();
+		} catch ( Exception e ){
+			e.printStackTrace();
+			//todo catch later
+			//this fatals if cant find server //todo fix in api
+		}
         this.dispose();
         MainFrame.getInstance().setVisible( true );
     }//GEN-LAST:event_loginButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField emailField;
+    private javax.swing.JLabel emailLabel;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel logo;
     private javax.swing.JPasswordField passField;
     private javax.swing.JLabel passLabel;
     private javax.swing.JButton signupButton;
-    private javax.swing.JTextField userField;
-    private javax.swing.JLabel userLabel;
     // End of variables declaration//GEN-END:variables
 }

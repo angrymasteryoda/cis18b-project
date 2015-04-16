@@ -4,12 +4,14 @@
  */
 package towerdefenseproject;
 
-import com.michael.api.IO.IO;
+import com.michael.api.Encoder;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -22,6 +24,12 @@ public class SignupWindow extends javax.swing.JFrame {
      */
     public SignupWindow() {
         initComponents();
+		//todo test data cause im lazy
+		usernameField.setText( "test" );
+		emailField.setText( "test@w.w" );
+		emailConfField.setText( "test@w.w" );
+		passField.setText( "password" );
+		passConfField.setText( "password" );
     }
 
     /**
@@ -179,11 +187,62 @@ public class SignupWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+		boolean hasBadInput = false;
+		if ( !Validation.validateInput( usernameField.getText(), usernameField.getName() ) ) {
+			hasBadInput = true;
+		}
 
+		if ( !Validation.validateInput( emailField.getText(), emailField.getName() ) ) {
+			hasBadInput = true;
+		}
+
+		if ( !Validation.validateInput( emailConfField.getText(), emailConfField.getName(), emailField.getText() ) ) {
+			hasBadInput = true;
+		}
+
+		if ( !Validation.validateInput( passField.getText(), passField.getName() ) ) {
+			hasBadInput = true;
+		}
+
+		if ( !Validation.validateInput( passConfField.getText(), passConfField.getName(), passField.getText() ) ) {
+			hasBadInput = true;
+		}
+
+		if ( hasBadInput ) {
+			JOptionPane.showMessageDialog( this, "You Have an error in one or more of the required fields" );
+			return;
+		}
+
+		try{
+			Connection connection = Main.getConnection();
+			Statement state = connection.createStatement();
+			ResultSet res = state.executeQuery( "SELECT id FROM users WHERE email=\""+ emailField.getText() + "\";" );
+
+			if ( res.next() ) {
+				JOptionPane.showMessageDialog( this, "Email already exists" );
+				return;
+			}
+			else {
+				String query = "INSERT INTO users( username, email, password, created) VALUES(\"" +
+					usernameField.getText() + "\", \"" +
+					emailField.getText() + "\", \"" +
+					Encoder.getMd5( passField.getText() ) + "\", " +
+					System.currentTimeMillis() / 1000L +
+					")";
+				state.executeUpdate( query );
+			}
+
+			res.close();
+			state.close();
+			connection.close();
+		} catch ( SQLException e ){
+			e.printStackTrace();
+			//todo catch later
+		}
 		//todo how is this working shouldn't since the comps are now out cleared from mem?
-        this.dispose();
-        new LoginWindow( usernameField.getText(), passField.getPassword().toString() ).setVisible( true );
-    }//GEN-LAST:event_createButtonActionPerformed
+		this.dispose();
+		new LoginWindow( emailField.getText(), passField.getPassword().toString() ).setVisible( true );
+	}//GEN-LAST:event_createButtonActionPerformed
 
 
     private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased

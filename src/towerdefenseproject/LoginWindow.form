@@ -34,8 +34,8 @@
                       <Component id="loginButton" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="passLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="userLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="userField" alignment="0" max="32767" attributes="0"/>
+                  <Component id="emailLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="emailField" alignment="0" max="32767" attributes="0"/>
                   <Component id="passField" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="96" max="32767" attributes="0"/>
@@ -48,9 +48,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="logo" min="-2" pref="75" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="userLabel" min="-2" max="-2" attributes="0"/>
+              <Component id="emailLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="userField" min="-2" max="-2" attributes="0"/>
+              <Component id="emailField" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
               <Component id="passLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -66,11 +66,11 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JTextField" name="userField">
+    <Component class="javax.swing.JTextField" name="emailField">
     </Component>
-    <Component class="javax.swing.JLabel" name="userLabel">
+    <Component class="javax.swing.JLabel" name="emailLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Username"/>
+        <Property name="text" type="java.lang.String" value="Email"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="passLabel">
