@@ -9,6 +9,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Start of a MySQL API
@@ -22,10 +24,18 @@ public class MysqlCon {
 	private static PreparedStatement prep = null;
 	private static Properties props = new Properties();
     private static FileInputStream file = null;
+	private static DatabaseMetaData meta = null;
 	private static String url;
 	private static String username;
 	private static String password;
-	public static boolean conStatus = false;
+	private static boolean conStatus = false;
+	
+	/**
+	 * Returns boolean value of the MySQL connection
+	 */
+	public static boolean connectionStatus(){
+		return conStatus;
+	}
 	
 	/**
 	 * Looks for database settings stored in a file and creates a MySQL connection
@@ -98,7 +108,7 @@ public class MysqlCon {
 	 * @return 
 	 */
 	public static PreparedStatement query(String query){
-		if (con!=null){
+		if (conStatus=true){
 			try {
 				prep = con.prepareStatement(query);
 				return prep;
@@ -125,7 +135,7 @@ public class MysqlCon {
 	 * @return 
 	 */
 	public static int numRows(String table,String par){
-		if (con!=null){
+		if (conStatus=true){
 			try {
 				if (par.length()<=0){
 					prep = con.prepareStatement("SELECT COUNT(*) FROM "+table);
@@ -143,6 +153,71 @@ public class MysqlCon {
 			return 0;
 		}
 		return 0;
+	}
+	
+	/**
+	 * Check if a tables exists
+	 * @param table name of the table to check
+	 * @return boolean
+	 */
+	public static boolean tableExists(String table) {
+		if (conStatus=true){
+			try {
+				meta = con.getMetaData();
+				result = meta.getTables( null, null, table, null );
+				if ( result.next() ) {
+					result.close();
+					return true;
+				} else {
+					result.close();
+					return false;
+				}
+			} catch (SQLException ex) {
+				System.out.println("MySQL Error: [Severe] Can not access connection meta data. "+ex);
+			}
+			
+		}
+		return false;
+	}
+	
+	/**
+	 * Create a table
+	 * @param table table name
+	 * @param query string of table create query
+	 * @param check boolean to check if table exists first
+	 * @return true if created
+	 */
+	public static boolean createTable(String table,String query,boolean check) {
+		if (conStatus=true){
+			if (check=true){
+				if (tableExists(table)){
+					System.out.println("MySQL Notice: Table not created, table already exists");
+					return false;
+				}
+			} 
+			try {
+				state = con.createStatement();
+				state.executeUpdate( query );
+				state.executeUpdate( "FLUSH TABLES" );
+				return true;
+			} catch (SQLException ex) {
+				System.out.println("MySQL Error: [Severe] "+ex);
+				return false;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Delete a table and its content from the database
+	 * @param table
+	 * @return 
+	 */
+	public static boolean dropTable(String table) {
+		if (conStatus=true){
+			// TODO FINISH
+		}
+		return false;
 	}
 	
 	/**

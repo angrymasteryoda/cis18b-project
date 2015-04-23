@@ -131,7 +131,8 @@ public class LoginWindow extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
 		dbOpen();
-		if (conStatus=true){
+		if (connectionStatus()){
+			createTable("test","CREATE TABLE IF NOT EXISTS `test` (`id` char(20) NOT NULL,`username` varchar(50) NOT NULL,`email` varchar(100) NOT NULL,`password` char(32) NOT NULL,UNIQUE KEY `uid` (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8",true);
 			String email = emailField.getText();
 			char[] tmp = passField.getPassword();
 			String password = "";

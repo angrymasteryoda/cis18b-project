@@ -218,7 +218,7 @@ public class SignupWindow extends javax.swing.JFrame {
 		}
 
 		dbOpen();
-		if (conStatus=true){
+		if (connectionStatus()){
 			int check = numRows("users","email = '"+emailField.getText()+"'");
 			if (check==0){
 				PreparedStatement state = query("INSERT INTO users (id,username,email,password) VALUES (?,?,?,?)");
