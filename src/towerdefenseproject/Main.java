@@ -13,7 +13,6 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.io.File;
-import java.sql.Connection;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,8 +26,6 @@ public class Main {
 	private static int width = 800; //width of splash
 	private static int height = 436; //height of splash
 	private static long time = 3000L; //time for the splash screen
-	protected static MySqlDatabase db;
-
 
 	/**
 	 * centers the splash screen in the center
@@ -67,7 +64,6 @@ public class Main {
 			}
 		}
 
-		db = new MySqlDatabase( "res/database.props", "local");
 		invokeLater( new Runnable() {
 			public void run() {
 				new LoginWindow().setVisible( true );
@@ -76,13 +72,5 @@ public class Main {
 			}
 		} );
 		window.dispose();
-	}
-
-	public static MySqlDatabase getDb() {
-		return db;
-	}
-
-	public static Connection getConnection() {
-		return db.getConnection();
 	}
 }

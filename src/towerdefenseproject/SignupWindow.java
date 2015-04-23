@@ -9,9 +9,13 @@ import com.michael.api.Encoder;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static towerdefenseproject.MysqlCon.*;
 
 /**
  *
@@ -213,35 +217,41 @@ public class SignupWindow extends javax.swing.JFrame {
 			return;
 		}
 
-		try{
-			Connection connection = Main.getConnection();
-			Statement state = connection.createStatement();
-			ResultSet res = state.executeQuery( "SELECT id FROM users WHERE email=\""+ emailField.getText() + "\";" );
-
-			if ( res.next() ) {
-				JOptionPane.showMessageDialog( this, "Email already exists" );
-				return;
+		dbOpen();
+		if (conStatus=true){
+			int check = numRows("users","email = '"+emailField.getText()+"'");
+			if (check==0){
+				PreparedStatement state = query("INSERT INTO users (id,username,email,password) VALUES (?,?,?,?)");
+				char[] tmp = passField.getPassword();
+				String password = "";
+				for(int x=0;x<tmp.length;x++){
+					password += tmp[x];
+				}
+				try {
+					state.setString(1,createId());
+					state.setString(2,usernameField.getText());
+					state.setString(3,emailField.getText());
+					state.setString(4,Encoder.getMd5(password));
+					check = state.executeUpdate();
+					if (check>0){
+						dbClose();
+						this.dispose();
+						new LoginWindow( emailField.getText(),password).setVisible( true );
+					} else {
+						JOptionPane.showMessageDialog(null,"We coiuld not create your account, please try again.","Error",0); 
+					}
+				} catch (SQLException ex) {
+					Logger.getLogger(SignupWindow.class.getName()).log(Level.SEVERE, null, ex);
+				}
+				
+			} else {
+				JOptionPane.showMessageDialog(null,"There is a user with that email address already registered.\n" +
+"","Error",2); 
 			}
-			else {
-				String query = "INSERT INTO users( username, email, password, created) VALUES(\"" +
-					usernameField.getText() + "\", \"" +
-					emailField.getText() + "\", \"" +
-					Encoder.getMd5( passField.getText() ) + "\", " +
-					System.currentTimeMillis() / 1000L +
-					")";
-				state.executeUpdate( query );
-			}
-
-			res.close();
-			state.close();
-			connection.close();
-		} catch ( SQLException e ){
-			e.printStackTrace();
-			//todo catch later
+		} else {
+			JOptionPane.showMessageDialog(null,"There is no database connection, you will not be able to play this game until this is fixed.","Fatal Error",0);
 		}
-		//todo how is this working shouldn't since the comps are now out cleared from mem?
-		this.dispose();
-		new LoginWindow( emailField.getText(), passField.getPassword().toString() ).setVisible( true );
+		dbClose();
 	}//GEN-LAST:event_createButtonActionPerformed
 
 

@@ -5,7 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
+import java.util.Random;
 
 /**
  * Start of a MySQL API
@@ -22,6 +25,7 @@ public class MysqlCon {
 	private static String url;
 	private static String username;
 	private static String password;
+	public static boolean conStatus = false;
 	
 	/**
 	 * Looks for database settings stored in a file and creates a MySQL connection
@@ -40,6 +44,7 @@ public class MysqlCon {
 				state = con.createStatement();
 				result = state.executeQuery("SELECT VERSION()");
 				if (result.next()) {
+					conStatus = true;
 					// Log This later on just for the heck of it
 					System.out.println("MySQL Notice: Connection established. Version: "+result.getString(1));
 				}
@@ -71,6 +76,7 @@ public class MysqlCon {
 			if (con!=null) {
 				con.close();
 				con = null;
+				conStatus = false;
 				System.out.println("MySQL Connection closed.");
 			}
 		} catch (SQLException ex) {
@@ -137,5 +143,32 @@ public class MysqlCon {
 			return 0;
 		}
 		return 0;
+	}
+	
+	/**
+	 * Create a 20 character unique id string
+	 * <p>
+	 * ID is created from a timestamp and random string of numbers. This system is especially
+	 * useful in a EVA environment for primary unique keys.
+	 * @return 
+	 */
+	public static String createId(){
+		String id = "";
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		java.util.Date day = new java.util.Date();
+		id = dateFormat.format(day) + ":" + randomNum(10000,99999);
+		return id;
+	}
+	
+	/**
+	 * Generate a random number including and between a minimum and maximum parameter
+	 * @param min int used for the low end
+	 * @param max int used for the high end
+	 * @return random int pulled from specified range 
+	 */
+	public static int randomNum(int min, int max) {
+		Random rand = new Random();
+		int num = rand.nextInt((max-min)+1)+min;
+		return num;
 	}
 }

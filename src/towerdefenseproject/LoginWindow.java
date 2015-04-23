@@ -8,9 +8,13 @@ import com.michael.api.Encoder;
 
 import javax.swing.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static towerdefenseproject.MysqlCon.*;
 
 /**
  *
@@ -126,26 +130,35 @@ public class LoginWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_signupButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-		try{
-			Connection connection = Main.getConnection();
-			Statement state = connection.createStatement();
-			ResultSet res = state.executeQuery( "SELECT id FROM users WHERE email=\""+ emailField.getText() + "\" AND password=\"" + Encoder.getMd5( passField.getText() ) + "\";" );
-
-			if ( !res.next() ) {
-				JOptionPane.showMessageDialog( this, "Email and or password was incorrect" );
-				return;
+		dbOpen();
+		if (conStatus=true){
+			String email = emailField.getText();
+			char[] tmp = passField.getPassword();
+			String password = "";
+			for(int x=0;x<tmp.length;x++){
+				password += tmp[x];
 			}
-
-			res.close();
-			state.close();
-			connection.close();
-		} catch ( Exception e ){
-			e.printStackTrace();
-			//todo catch later
-			//this fatals if cant find server //todo fix in api
+			PreparedStatement state = query("SELECT id FROM users WHERE email = ? AND password = ?");
+			try {
+				state.setString(1,email);
+				state.setString(2,Encoder.getMd5(password));
+				ResultSet result = state.executeQuery();
+				if (result.next()!=false){
+					// todo save this userId, seralize?
+					String userId = result.getString("id");
+					dbClose();
+					this.dispose();
+					MainFrame.getInstance().setVisible( true );
+				} else {
+					JOptionPane.showMessageDialog(null,"The credentials you provided were incorrect, please try again.","Error Logging In",2);
+				}
+			} catch (SQLException ex) {
+				Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		} else {
+			JOptionPane.showMessageDialog(null,"There is no database connection, you will not be able to play this game until this is fixed.","Fatal Error",0);
 		}
-        this.dispose();
-        MainFrame.getInstance().setVisible( true );
+		dbClose();
     }//GEN-LAST:event_loginButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
