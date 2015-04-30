@@ -221,17 +221,21 @@ public class SignupWindow extends javax.swing.JFrame {
 		if (connectionStatus()){
 			int check = numRows("users","email = '"+emailField.getText()+"'");
 			if (check==0){
-				PreparedStatement state = query("INSERT INTO users (id,username,email,password) VALUES (?,?,?,?)");
+				if ( !tableExists( "users" ) ) {
+					createTableFromFile( "users" );
+				}
+				PreparedStatement state = query("INSERT INTO users (id,username,email,password,created) VALUES (?,?,?,?,?)");
 				char[] tmp = passField.getPassword();
 				String password = "";
 				for(int x=0;x<tmp.length;x++){
 					password += tmp[x];
 				}
 				try {
-					state.setString(1,createId());
-					state.setString(2,usernameField.getText());
-					state.setString(3,emailField.getText());
-					state.setString(4,Encoder.getMd5(password));
+					state.setString( 1, createId() );
+					state.setString( 2, usernameField.getText() );
+					state.setString( 3, emailField.getText() );
+					state.setString( 4, Encoder.getMd5( password ) );
+					state.setLong( 5, System.currentTimeMillis() / 1000L );
 					check = state.executeUpdate();
 					if (check>0){
 						dbClose();
@@ -245,8 +249,7 @@ public class SignupWindow extends javax.swing.JFrame {
 				}
 				
 			} else {
-				JOptionPane.showMessageDialog(null,"There is a user with that email address already registered.\n" +
-"","Error",2); 
+				JOptionPane.showMessageDialog(null,"There is a user with that email address already registered.","Error",2);
 			}
 		} else {
 			JOptionPane.showMessageDialog(null,"There is no database connection, you will not be able to play this game until this is fixed.","Fatal Error",0);

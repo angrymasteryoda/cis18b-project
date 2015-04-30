@@ -42,14 +42,14 @@ public class Main {
 
 	public static void main( String[] args ) throws Exception {
 		JWindow window = new JWindow();
-		
+
 		if( !Arrays.asList( args ).contains( "nosplash" ) ) {
 			Image splash = null;
 			Image splashResize = null;
 				
 			//if we fail to find image just boot app
 			try {
-				splash = ImageIO.read( new File( "res/tdc-logo-smaller.jpg" ) );
+				splash = ImageIO.read( Main.class.getClassLoader().getResource( "tdc-logo-smaller.jpg" ) );
 				splashResize = splash.getScaledInstance( width, height, java.awt.Image.SCALE_SMOOTH );
 
 				window.getContentPane().add(

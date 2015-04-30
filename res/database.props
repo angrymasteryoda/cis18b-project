@@ -1,6 +1,0 @@
-local.url=jdbc:mysql://localhost:3306/42029
-local.user=42029
-local.password=42029cis18b
-live.url=jdbc:mysql://209.129.8.5:3306/42029
-live.user=42029
-live.password=42029cis18b
