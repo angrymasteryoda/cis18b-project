@@ -138,7 +138,7 @@ public class LoginWindow extends javax.swing.JFrame {
 			for(int x=0;x<tmp.length;x++){
 				password += tmp[x];
 			}
-			PreparedStatement state = query("SELECT id FROM users WHERE email = ? AND password = ?");
+			PreparedStatement state = query("SELECT id FROM td_users WHERE email = ? AND password = ?");
 			try {
 				state.setString(1,email);
 				state.setString(2,Encoder.getMd5(password));

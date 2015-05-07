@@ -219,15 +219,15 @@ public class SignupWindow extends javax.swing.JFrame {
 
 		dbOpen();
 		if (connectionStatus()){
-			int check = numRows("users","email = '"+emailField.getText()+"'");
+			int check = numRows( "td_users", "email = '" + emailField.getText() + "'" );
 			if (check==0){
-				if ( !tableExists( "users" ) ) {
-					createTableFromFile( "users" );
+				if ( !tableExists( "td_users" ) ) {
+					createTableFromFile( "td_users" );
 				}
-				PreparedStatement state = query("INSERT INTO users (id,username,email,password,created) VALUES (?,?,?,?,?)");
+				PreparedStatement state = query( "INSERT INTO td_users (id,username,email,password,created) VALUES (?,?,?,?,?)" );
 				char[] tmp = passField.getPassword();
 				String password = "";
-				for(int x=0;x<tmp.length;x++){
+				for ( int x = 0; x < tmp.length; x++ ) {
 					password += tmp[x];
 				}
 				try {
@@ -240,19 +240,19 @@ public class SignupWindow extends javax.swing.JFrame {
 					if (check>0){
 						dbClose();
 						this.dispose();
-						new LoginWindow( emailField.getText(),password).setVisible( true );
+						new LoginWindow( emailField.getText(), password ).setVisible( true );
 					} else {
-						JOptionPane.showMessageDialog(null,"We coiuld not create your account, please try again.","Error",0); 
+						JOptionPane.showMessageDialog( null, "We could not create your account, please try again.", "Error", 0 );
 					}
 				} catch (SQLException ex) {
-					Logger.getLogger(SignupWindow.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger( SignupWindow.class.getName() ).log( Level.SEVERE, null, ex );
 				}
-				
+
 			} else {
-				JOptionPane.showMessageDialog(null,"There is a user with that email address already registered.","Error",2);
+				JOptionPane.showMessageDialog( null, "There is a user with that email address already registered.", "Error", 2 );
 			}
 		} else {
-			JOptionPane.showMessageDialog(null,"There is no database connection, you will not be able to play this game until this is fixed.","Fatal Error",0);
+			JOptionPane.showMessageDialog( null, "There is no database connection, you will not be able to play this game until this is fixed.", "Fatal Error", 0 );
 		}
 		dbClose();
 	}//GEN-LAST:event_createButtonActionPerformed
