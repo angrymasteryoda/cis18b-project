@@ -122,7 +122,7 @@ public class MysqlCon {
 	 * @return
 	 */
 	public static PreparedStatement query( String query ) {
-		if ( conStatus = true ) {
+		if ( conStatus == true ) {
 			try {
 				prep = con.prepareStatement( query );
 				return prep;
@@ -150,7 +150,7 @@ public class MysqlCon {
 	 * @return
 	 */
 	public static int numRows( String table, String par ) {
-		if ( conStatus = true ) {
+		if ( conStatus == true ) {
 			try {
 				if ( par.length() <= 0 ) {
 					prep = con.prepareStatement( "SELECT COUNT(*) FROM " + table );
@@ -177,7 +177,7 @@ public class MysqlCon {
 	 * @return boolean
 	 */
 	public static boolean tableExists( String table ) {
-		if ( conStatus = true ) {
+		if ( conStatus == true ) {
 			try {
 				meta = con.getMetaData();
 				result = meta.getTables( null, null, table, null );
@@ -205,8 +205,8 @@ public class MysqlCon {
 	 * @return true if created
 	 */
 	public static boolean createTable( String table, String query, boolean check ) {
-		if ( conStatus = true ) {
-			if ( check = true ) {
+		if ( conStatus == true ) {
+			if ( check == true ) {
 				if ( tableExists( table ) ) {
 					System.out.println( "MySQL Notice: Table not created, table already exists" );
 					return false;
@@ -250,7 +250,7 @@ public class MysqlCon {
 	 * @return
 	 */
 	public static boolean dropTable( String table ) {
-		if ( conStatus = true ) {
+		if ( conStatus == true ) {
 			// TODO FINISH
 		}
 		return false;
